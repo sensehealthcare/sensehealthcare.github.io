@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sense Health - The Future of Health, at Your Fingertip</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000000;
+            /* slate-900 */
+            color: #e2e8f0;
+            /* slate-200 */
+        }
+
+        .hero-section {
+            position: relative;
+            background-color: #0f172a;
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        #wave-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-wrapper {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 5rem;
+            padding-bottom: 5rem;
+        }
+
+        .accent-text {
+            background: -webkit-linear-gradient(45deg, #a5b4fc, #d208fb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .accent-bg {
+            background-color: #ab0cca;
+        }
+
+        .accent-bg-hover:hover {
+            background-color: #ab0cca;
+            /* indigo-700 */
+        }
+
+        .card {
+            background-color: #1e293b;
+            /* slate-800 */
+            border: 1px solid #334155;
+            /* slate-700 */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.1), 0 8px 10px -6px rgba(79, 70, 229, 0.1);
+        }
+
+        .value-card {
+            background-color: #000000;
+            /* slate-800 */
+            border: 1px solid #334155;
+            /* slate-700 */
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            transition: all 0.3s ease;
+        }
+
+        .value-card:hover {
+            transform: translateY(-5px);
+            border-color: #ab0cca;
+        }
+
+        .feature-card-usp {
+            background-color: #1e293b;
+            border-radius: 0.75rem;
+            padding: 2rem;
+            border: 1px solid #334155;
+            transition: all 0.3s ease-in-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card-usp:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 0, rgba(0, 0, 0, 0.2), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .feature-card-usp:hover:before {
+            opacity: 1;
+        }
+
+        /* New Publication Category Card Style */
+        .category-card {
+            background-color: #1e293b;
+            border: 1px solid #000000;
+            border-radius: 0.75rem;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .category-card:hover {
+            transform: translateY(-8px);
+            border-color: #ab0cca;
+            box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.2);
+        }
+
+        .category-card .arrow-icon {
+            position: absolute;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            transition: transform 0.3s ease;
+            opacity: 0.5;
+        }
+
+        .category-card:hover .arrow-icon {
+            transform: translateX(5px);
+            opacity: 1;
+        }
+
+        /* Publication Modal Style */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background-color: #000000;
+            border-radius: 0.75rem;
+            border: 1px solid #9B5DE5;
+            padding: 2rem;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: scale(0.95);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        .gif-container {
+            width: 100%;
+            height: 220px;
+            /* you can adjust this height */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* optional: gives consistent background */
+
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        .gif-container img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 0.5rem;
+            /* keeps aspect ratio */
+        }
+
+
+        /* Timeline Styles */
+        .timeline-container {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 20px;
+            height: 100%;
+            width: 2px;
+            background: #334155;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 60px;
+            margin-bottom: 50px;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-dot {
+            content: '';
+            position: absolute;
+            left: 12px;
+            top: 5px;
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background-color: #4f46e5;
+            border: 4px solid #1e293b;
+        }
+
+        @media (min-width: 768px) {
+            .timeline-container::before {
+                left: 50%;
+                margin-left: -1px;
+            }
+
+            .timeline-item {
+                padding-left: 0;
+                width: 50%;
+                margin-bottom: 0;
+            }
+
+            .timeline-item:nth-child(odd) {
+                padding-right: 60px;
+                text-align: right;
+            }
+
+            .timeline-item:nth-child(even) {
+                margin-left: 50%;
+                padding-left: 60px;
+            }
+
+            .timeline-item:nth-child(odd) .timeline-dot {
+                right: -10px;
+                left: auto;
+            }
+
+            .timeline-item:nth-child(even) .timeline-dot {
+                left: -10px;
+            }
+
+            .timeline-item:not(:last-child) {
+                margin-bottom: 80px;
+            }
+        }
+
+        /* Animation Styles */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .fade-in-up.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+
+<body class="text-slate-200">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Header -->
+    <header class="bg-slate-900/70 backdrop-blur-md sticky top-0 z-50 border-b border-slate-800"
+        style="background-color: #000000;">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#hero" class="flex items-center">
+                <img src="whitewash logo.png" alt="Sense Health" class="h-20 w-auto">
+            </a>
+
+            <!-- Navigation -->
+            <nav class="hidden md:flex items-center space-x-8 text-slate-300">
+                <a href="#product" class="hover:text-white transition-colors">Technology</a>
+                <a href="#about" class="hover:text-white transition-colors">Our Story</a>
+                <a href="#publications" class="hover:text-white transition-colors">Research</a>
+                <a href="#team" class="hover:text-white transition-colors">Team</a>
+            </nav>
+
+            <!-- Button -->
+            <a href="#contact"
+                class="accent-bg text-white px-5 py-2 rounded-lg accent-bg-hover transition-all shadow-sm font-semibold">
+                Get in Touch
+            </a>
+        </div>
+    </header>
+
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-section" style="background-color: #000000;">
+            <canvas id="wave-canvas"></canvas>
+            <div class="container mx-auto px-6 text-center hero-content">
+                <h1 class="text-4xl md:text-6xl font-bold text-white leading-tight mb-4">
+                    The Future of Health, <span class="accent-text">at Your Fingertip.</span>
+                </h1>
+                <p class="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto mb-8">
+                    Our AI-enabled wearable delivers <span class="text-white font-semibold">prickless blood
+                        glucose</span>, <span class="text-white font-semibold">cuffless blood pressure</span>, and a
+                    <span class="text-white font-semibold">leadless 12-lead ECG</span> in just 30 seconds.
+                </p>
+                <div class="flex justify-center">
+                    <a href="#product"
+                        class="accent-bg text-white px-8 py-3 rounded-lg text-lg font-semibold accent-bg-hover transition-transform transform hover:scale-105 shadow-lg">
+                        Discover the Technology
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Product Features Section -->
+        <section id="product" class="py-20 section-wrapper">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16 fade-in-up">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white">One Touch. A Lifetime of Insight.</h2>
+                    <p class="text-lg text-slate-400 mt-4 max-w-2xl mx-auto">Our device provides a complete picture of
+                        your health from a single, non-invasive touch, connected to our intelligent mobile app.</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div class="text-center fade-in-up" style="transition-delay: 100ms;">
+                        <img src="image (1).png" alt="Sense Health Device"
+                            class="rounded-2xl shadow-2xl mx-auto transform hover:scale-105 transition-transform duration-300">
+                        <p class="text-sm text-slate-500 mt-4">Built with FDA-approved sensors for clinical-grade
+                            accuracy.</p>
+                    </div>
+                    <div class="space-y-8">
+                        <div class="flex items-start fade-in-up" style="transition-delay: 200ms;">
+                            <div class="accent-bg p-3 rounded-full mr-5 shrink-0"><svg
+                                    xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.657 7.343A8 8 0 0117.657 18.657z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M9.879 16.121A3 3 0 1014.12 11.88" />
+                                </svg></div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-white mb-1">Prickless Glucose Monitoring</h3>
+                                <p class="text-slate-400">Monitor your blood sugar levels accurately and painlessly.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start fade-in-up" style="transition-delay: 300ms;">
+                            <div class="accent-bg p-3 rounded-full mr-5 shrink-0"><svg
+                                    xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                </svg></div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-white mb-1">Cuffless Blood Pressure</h3>
+                                <p class="text-slate-400">Check your blood pressure on the go, without a bulky cuff.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start fade-in-up" style="transition-delay: 400ms;">
+                            <div class="accent-bg p-3 rounded-full mr-5 shrink-0"><svg
+                                    xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                                </svg></div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-white mb-1">Leadless 12-Lead ECG</h3>
+                                <p class="text-slate-400">Capture a clinical-grade electrocardiogram from a single
+                                    touch.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start fade-in-up" style="transition-delay: 500ms;">
+                            <div class="accent-bg p-3 rounded-full mr-5 shrink-0"><svg
+                                    xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                </svg></div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-white mb-1">Comprehensive Vitals</h3>
+                                <p class="text-slate-400">Continuously track Heart Rate (HR), Respiration Rate (RR), and
+                                    SpO2.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="demo" class="py-20 bg-slate-900" style="background-color: #000000;">
+            <div class="container mx-auto px-6 text-center">
+                <!-- Section Title -->
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
+                    See How Our Device Works
+                </h2>
+                <p class="text-lg text-slate-400 mb-12 max-w-2xl mx-auto">
+                    Experience the ease of vitals monitoring. Below is a quick demo
+                    showing the device in action and a live visualization of how it captures your health data.
+                </p>
+
+                <!-- Demo Layout (Centered Column) -->
+                <div class="flex flex-col md:flex-row justify-center items-center gap-12">
+
+                    <!-- Image 1 -->
+                    <div class="bg-slate-800 p-6 rounded-2xl shadow-lg max-w-sm" style="background-color:#000000 ;">
+                        <img src="devicee.png" alt="Cuffless Blood Pressure Visualization"
+                            class="w-full rounded-xl border border-slate-700 shadow-md" />
+                        <p class="mt-4 text-slate-300 text-sm">
+                            Real-time visualization of vitals measurement.
+                        </p>
+                    </div>
+
+                    <!-- Bluetooth Animation -->
+                    <div class="flex justify-center items-center">
+                        <div class="relative w-28 h-28 flex justify-center items-center">
+                            <!-- Bluetooth Icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-blue-500 relative z-10"
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M7 7l10 10-5 5V2l5 5-10 10" />
+                            </svg>
+
+                            <!-- Waves -->
+                            <span class="absolute w-12 h-12 rounded-full border-2 border-blue-400 animate-ping"></span>
+                            <span
+                                class="absolute w-16 h-16 rounded-full border-2 border-blue-400 animate-ping delay-150"></span>
+                            <span
+                                class="absolute w-20 h-20 rounded-full border-2 border-blue-400 animate-ping delay-300"></span>
+                        </div>
+                    </div>
+
+                    <!-- Demo GIF inside phone frame -->
+                    <div class="flex justify-center">
+                        <div
+                            class="relative w-[220px] md:w-[260px] bg-black rounded-[2rem] shadow-xl border-4 border-slate-700 overflow-hidden">
+                            <!-- Top speaker (for phone look) -->
+                            <div class="absolute top-2 left-1/2 -translate-x-1/2 w-10 h-1.5 bg-slate-600 rounded-full">
+                            </div>
+                            <img src="demoo.gif" alt="Demo">
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Extra CSS for delay -->
+        <style>
+            .delay-150 {
+                animation-delay: 0.15s;
+            }
+
+            .delay-300 {
+                animation-delay: 0.3s;
+            }
+        </style>
+
+
+
+
+
+        <!-- Core Technology USP Section -->
+        <section id="core-technology" class="py-20 bg-slate-900 section-wrapper" style="background-color: #000000;">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16 fade-in-up">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white">Revolutionizing Health Monitoring</h2>
+                    <p class="text-lg text-slate-400 mt-4 max-w-3xl mx-auto">
+                        Our core innovations replace inconvenient, traditional methods with seamless, intelligent
+                        technology.
+                    </p>
+                </div>
+
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- USP 1: Cuffless BP -->
+                    <div class="feature-card-usp text-center fade-in-up" style="transition-delay: 100ms;">
+                        <div class="gif-container">
+                            <img src="cuffle (2).gif" alt="Cuffless Blood Pressure Visualization" />
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-3">Cuffless Blood Pressure</h3>
+                        <p class="text-slate-400">
+                            Measure your blood pressure anytime, anywhere, without the hassle of a traditional cuff.
+                            Just a simple touch provides accurate, on-demand readings.
+                        </p>
+                    </div>
+
+                    <!-- USP 2: Prickless Glucose -->
+                    <div class="feature-card-usp text-center fade-in-up" style="transition-delay: 200ms;">
+                        <div class="gif-container">
+                            <img src="pricle.gif" alt="Checking Blood Sugar" style="border-radius: 0.5rem;" />
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-3">Prickless Blood Glucose </h3>
+                        <p class="text-slate-400">
+                            Monitor your blood glucose levels without painful finger pricks. Our non-invasive technology
+                            offers a comfortable and convenient way to stay on top of your health.
+                        </p>
+                    </div>
+
+                    <!-- USP 3: Leadless ECG -->
+                    <div class="feature-card-usp text-center fade-in-up" style="transition-delay: 300ms;">
+                        <div class="gif-container">
+                            <img src="leadl.gif" alt="Leadless 12-Lead ECG Visualization" />
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-3">Leadless 12-Lead ECG</h3>
+                        <p class="text-slate-400">
+                            Obtain a comprehensive, clinical-grade 12-lead ECG with a single touch. No wires, no
+                            patches, just deep insights into your cardiac health.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- About / Timeline Section -->
+        <section id="about" class="py-20 section-wrapper">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16 fade-in-up">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white">Our Story: Key Milestones</h2>
+                    <p class="text-lg text-slate-400 mt-4 max-w-3xl mx-auto">From a bold idea to a revolutionary
+                        product, our mission has always been clear: make proactive health monitoring accessible to
+                        everyone.</p>
+                </div>
+
+                <div class="timeline-container max-w-4xl mx-auto">
+                    <div class="timeline-item fade-in-up">
+                        <div class="timeline-dot" style="background-color:#ab0cca ;"></div>
+                        <div class="card p-6 rounded-lg">
+                            <h3 class="font-bold text-white text-lg">Early 2019 </h3>
+                            <p class="text-sm text-slate-400">Development of the first-generation fingertip device and
+                                foundational AI algorithms.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item fade-in-up">
+                        <div class="timeline-dot" style="background-color:#ab0cca ;"></div>
+                        <div class="card p-6 rounded-lg">
+                            <h3 class="font-bold text-white text-lg">2022 - The Spark</h3>
+                            <p class="text-sm text-slate-400">Conceptualization and initial research into non-invasive
+                                sensor technology at IITH.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item fade-in-up">
+                        <div class="timeline-dot" style="background-color:#ab0cca ;"></div>
+                        <div class="card p-6 rounded-lg">
+                            <h3 class="font-bold text-white text-lg">Early 2023 - First Prototype</h3>
+                            <p class="text-sm text-slate-400">Development of the first-generation fingertip device and
+                                foundational AI algorithms.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item fade-in-up">
+                        <div class="timeline-dot" style="background-color:#ab0cca ;"></div>
+                        <div class="card p-6 rounded-lg">
+                            <h3 class="font-bold text-white text-lg">Late 2023 - Seed Funding</h3>
+                            <p class="text-sm text-slate-400">Secured initial funding to accelerate R&D and filed key
+                                technology patents.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item fade-in-up">
+                        <div class="timeline-dot" style="background-color:#ab0cca ;"></div>
+                        <div class="card p-6 rounded-lg">
+                            <h3 class="font-bold text-white text-lg">2024 - Clinical Validation</h3>
+                            <p class="text-sm text-slate-400">Began rigorous testing and validation against clinical
+                                gold standards.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item fade-in-up">
+                        <div class="timeline-dot" style="background-color:#ab0cca ;"></div>
+                        <div class="card p-6 rounded-lg">
+                            <h3 class="font-bold text-white text-lg">2025 - Launching Soon</h3>
+                            <p class="text-sm text-slate-400">Preparing for commercial launch and seeking final
+                                regulatory approvals.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Publications Section -->
+        <section id="publications" class="py-20 bg-slate-900 section-wrapper" style="background-color: #000000;">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16 fade-in-up">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white">Our Foundation of Research</h2>
+                    <p class="text-lg text-slate-400 mt-4 max-w-2xl mx-auto">Our technology is built upon a deep
+                        foundation of peer-reviewed scientific research. Select a domain to explore our publications.
+                    </p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                    <div class="category-card fade-in-up" data-category="cardiovascular"
+                        style="transition-delay: 100ms;">
+                        <div class="accent-bg w-12 h-12 rounded-lg flex items-center justify-center mb-4"><svg
+                                class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
+                                </path>
+                            </svg></div>
+                        <h3 class="text-xl font-bold text-white">Cardiovascular Health</h3>
+                        <p class="text-slate-400 mt-2">Novel methods for monitoring BP, blood glucose, and other key
+                            vitals.</p>
+                        <div class="arrow-icon"><svg class="w-6 h-6 text-indigo-400" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg></div>
+                    </div>
+                    <div class="category-card fade-in-up" data-category="ecg" style="transition-delay: 200ms;">
+                        <div class="accent-bg w-12 h-12 rounded-lg flex items-center justify-center mb-4"><svg
+                                class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg></div>
+                        <h3 class="text-xl font-bold text-white">ECG & Cardiac AI</h3>
+                        <p class="text-slate-400 mt-2">Applying deep learning to synthesize and analyze cardiac signals.
+                        </p>
+                        <div class="arrow-icon"><svg class="w-6 h-6 text-indigo-400" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg></div>
+                    </div>
+                    <div class="category-card fade-in-up" data-category="ppg" style="transition-delay: 300ms;">
+                        <div class="accent-bg w-12 h-12 rounded-lg flex items-center justify-center mb-4"><svg
+                                class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z">
+                                </path>
+                            </svg></div>
+                        <h3 class="text-xl font-bold text-white">PPG Research</h3>
+                        <p class="text-slate-400 mt-2">Innovations in photoplethysmography for non-invasive sensing.</p>
+                        <div class="arrow-icon"><svg class="w-6 h-6 text-indigo-400" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg></div>
+                    </div>
+                    <div class="category-card fade-in-up" data-category="sleep" style="transition-delay: 400ms;">
+                        <div class="accent-bg w-12 h-12 rounded-lg flex items-center justify-center mb-4"><svg
+                                class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z">
+                                </path>
+                            </svg></div>
+                        <h3 class="text-xl font-bold text-white">Mental Health & Sleep Studies</h3>
+                        <p class="text-slate-400 mt-2">Algorithms and sensor technology for sleep apnea detection.</p>
+                        <div class="arrow-icon"><svg class="w-6 h-6 text-indigo-400" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ethos Section -->
+        <section id="ethos" class="py-20 section-wrapper">
+            <div class="container mx-auto px-6">
+                <div class="grid lg:grid-cols-2 gap-16 items-center">
+                    <div class="fade-in-up">
+                        <p class="text-indigo-400 font-semibold tracking-wider uppercase">Our Ethos</p>
+                        <h2 class="text-3xl md:text-4xl font-bold text-white mt-2">Driven by Science, Guided by Values.
+                        </h2>
+                        <p class="text-lg text-slate-400 mt-4">Sense Health began as a research initiative within one of
+                            India's premier institutions, the IIT. Our technology is built on a foundation of academic
+                            rigor, and our mission is guided by an unwavering commitment to the people we serve.</p>
+                    </div>
+                    <div class="grid sm:grid-cols-2 gap-6 fade-in-up" style="transition-delay: 200ms;">
+                        <!-- Value 1: Innovation -->
+                        <div class="value-card" style="background-color: #1e293b;">
+                            <div class="accent-bg w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z">
+                                    </path>
+                                </svg>
+                            </div>
+                            <h4 class="text-xl font-bold text-white mb-2">Innovation</h4>
+                            <p class="text-slate-400">Pushing the boundaries of health technology.</p>
+                        </div>
+                        <!-- Value 2: Patient-Centricity -->
+                        <div class="value-card" style="background-color: #1e293b;">
+                            <div class="accent-bg w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
+                                    </path>
+                                </svg>
+                            </div>
+                            <h4 class="text-xl font-bold text-white mb-2">Patient-Centricity</h4>
+                            <p class="text-slate-400">Designing for comfort and real-world needs.</p>
+                        </div>
+                        <!-- Value 3: Scientific Rigor -->
+                        <div class="value-card" style="background-color: #1e293b;">
+                            <div class="accent-bg w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z">
+                                    </path>
+                                </svg>
+                            </div>
+                            <h4 class="text-xl font-bold text-white mb-2">Scientific Rigor</h4>
+                            <p class="text-slate-400">Ensuring our technology is backed by evidence.</p>
+                        </div>
+                        <!-- Value 4: Integrity -->
+                        <div class="value-card" style="background-color: #1e293b;">
+                            <div class="accent-bg w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z">
+                                    </path>
+                                </svg>
+                            </div>
+                            <h4 class="text-xl font-bold text-white mb-2">Integrity</h4>
+                            <p class="text-slate-400">Upholding the highest standards of privacy and ethics.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="team" class="py-20 section-wrapper">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16 fade-in-up">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white">Meet Our Team</h2>
+                    <p class="text-lg text-slate-400 mt-4 max-w-2xl mx-auto">A passionate group of professors,
+                        scientists, and engineers dedicated to our mission.</p>
+                </div>
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12 max-w-5xl mx-auto">
+                    <div class="text-center fade-in-up" style="transition-delay: 100ms;"><img src="amit.jpg"
+                            alt="Team Member 1" class="w-40 h-50 rounded-full mx-auto mb-4 border-4 border-slate-700">
+                        <h3 class="text-xl font-bold text-white">AMIT ACHARYYA</h3>
+                        <p class="text-slate-400">Founder & CEO</p>
+                    </div>
+                    <div class="text-center fade-in-up" style="transition-delay: 200ms;"><img src="Asudev.jpg"
+                            alt="Team Member 2" class="w-40 h-50 rounded-full mx-auto mb-4 border-4 border-slate-700">
+                        <h3 class="text-xl font-bold text-white">ASUDEB DUTTA</h3>
+                        <p class="text-slate-400">CSO</p>
+                    </div>
+                    <div class="text-center fade-in-up" style="transition-delay: 300ms;"><img src="Pabitra.jpg"
+                            alt="Team Member 3" class="w-40 h-50 rounded-full mx-auto mb-4 border-4 border-slate-700">
+                        <h3 class="text-xl font-bold text-white">PABITRA DAS</h3>
+                        <p class="text-slate-400">CTO</p>
+                    </div>
+                    <div class="text-center fade-in-up" style="transition-delay: 400ms;"><img src="surita.jpg"
+                            alt="Team Member 4" class="w-40 h-50 rounded-full mx-auto mb-4 border-4 border-slate-700">
+                        <h3 class="text-xl font-bold text-white">SURITA SARKAR</h3>
+                        <p class="text-slate-400">CPO</p>
+                    </div>
+                    <div class="text-center fade-in-up" style="transition-delay: 500ms;"><img src="rashmiiii (1).png"
+                            alt="Team Member 5" class="w-40 h-50 rounded-full mx-auto mb-4 border-4 border-slate-700">
+                        <h3 class="text-xl font-bold text-white">RASHMI KUMARI</h3>
+                        <p class="text-slate-400">R&D Engineer</p>
+                    </div>
+                    <div class="text-center fade-in-up" style="transition-delay: 600ms;"><img src="Prateek.jpg"
+                            alt="Team Member 6" class="w-40 h-50 rounded-full mx-auto mb-4 border-4 border-slate-700">
+                        <h3 class="text-xl font-bold text-white">PRATEEK AGRAWAL</h3>
+                        <p class="text-slate-400">R&D Engineer (AI/ML)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section id="contact" class="py-20 bg-slate-900" style="background-color: #000000;">
+            <div class="container mx-auto px-6 text-center fade-in-up">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Join the Health Revolution</h2>
+                <p class="text-lg text-slate-300 max-w-2xl mx-auto mb-8">Stay updated on our launch, or reach out for
+                    partnership and investment opportunities. Let's build the future of healthcare together.</p>
+                <a href="mailto:contact@sense-health.lovable.app"
+                    class="accent-bg text-white px-10 py-4 rounded-lg text-xl font-semibold accent-bg-hover transition-transform transform hover:scale-105 shadow-2xl inline-block">
+                    Get in Touch
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 bg-slate-900" style="background-color: #000000;">
+        <div class="container mx-auto px-6 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Company Info -->
+                <div class="col-span-1 md:col-span-2">
+                    <h3 class="text-xl font-bold text-white mb-2">Sense Health</h3>
+                    <p class="text-slate-400 max-w-xs">The Future of Health, at Your Fingertip.</p>
+                </div>
+                <!-- Contact Info -->
+                <div>
+                    <h4 class="font-semibold text-white tracking-wider uppercase mb-4">Contact</h4>
+                    <ul class="space-y-2 text-slate-400">
+                        <li><a href="mailto:contact@sense-health.lovable.app"
+                                class="hover:text-white transition-colors">contactus@sensehealth.care</a></li>
+                        <li><a href="tel:+1234567890" class="hover:text-white transition-colors">9989405424 /
+                                9493329640</a></li>
+                    </ul>
+                </div>
+                <!-- Social Media -->
+                <div>
+                    <h4 class="font-semibold text-white tracking-wider uppercase mb-4">Follow Us</h4>
+                    <div class="flex space-x-4">
+                        <a href="https://www.linkedin.com/company/sensehealthcare/posts/?feedView=all" target="_blank"
+                            rel="noopener noreferrer" class="text-slate-400 hover:text-white transition-colors">
+                            <span class="sr-only">LinkedIn</span>
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path
+                                    d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z">
+                                </path>
+                            </svg>
+                        </a>
+                        <a href="https://x.com/SenseHealthcare"
+                            class="text-slate-400 hover:text-white transition-colors">
+                            <span class="sr-only">Twitter</span>
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path
+                                    d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z">
+                                </path>
+                            </svg>
+                        </a>
+                        <a href="https://www.facebook.com/people/SenseHealth/61564515958913/"
+                            class="text-slate-400 hover:text-white transition-colors" target="_blank"
+                            rel="noopener noreferrer">
+                            <span class="sr-only">Facebook</span>
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M22.675 0h-21.35C.597 0 0 .597 0 1.325v21.351C0 23.403.597 24 
+               1.325 24h11.495v-9.294H9.691V11.01h3.129V8.413c0-3.1 
+               1.893-4.788 4.659-4.788 1.325 0 2.463.099 
+               2.794.143v3.24h-1.918c-1.504 0-1.796.715-1.796 
+               1.764v2.31h3.59l-.467 3.696h-3.123V24h6.127C23.403 
+               24 24 23.403 24 22.676V1.325C24 
+               .597 23.403 0 22.675 0z" />
+                            </svg>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div
+            class="mt-8 border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-slate-500">
+            <p>&copy; 2025 Sense Health. All rights reserved.</p>
+            <div class="flex space-x-6 mt-4 md:mt-0">
+                <a href="#" class="hover:text-slate-300 transition-colors">Privacy Policy</a>
+                <a href="#" class="hover:text-slate-300 transition-colors">Terms of Service</a>
+            </div>
+        </div>
+        </div>
+    </footer>
+
+    <!-- Publication Modal -->
+    <div id="publication-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-6">
+                <h2 id="modal-title" class="text-2xl font-bold text-white"></h2>
+                <button id="modal-close"
+                    class="text-slate-400 hover:text-white transition-colors text-3xl">&times;</button>
+            </div>
+            <div id="modal-body" class="space-y-4">
+                <!-- Publication items will be injected here -->
+            </div>
+        </div>
+    </div>
+    <script>
+        const video = document.getElementById("demo");
+
+        video.addEventListener("ended", () => {
+            setTimeout(() => {
+                video.play();
+            }, 3000); // wait 3 seconds before restart
+        });
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // --- Fluid Wave Animation Script ---
+        let scene, camera, renderer, mesh;
+        let uniforms;
+
+        function initWave() {
+            const canvas = document.getElementById('wave-canvas');
+            const heroSection = document.querySelector('.hero-section');
+
+            // Scene
+            scene = new THREE.Scene();
+
+            // Camera
+            camera = new THREE.PerspectiveCamera(75, heroSection.offsetWidth / heroSection.offsetHeight, 0.1, 1000);
+            camera.position.z = 1;
+
+            // Renderer
+            renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
+            renderer.setSize(heroSection.offsetWidth, heroSection.offsetHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+
+            // Geometry and Material
+            const geometry = new THREE.PlaneGeometry(2, 2, 128, 128);
+
+            uniforms = {
+                u_time: { type: "f", value: 1.0 },
+                u_mouse: { type: "v2", value: new THREE.Vector2() },
+                u_resolution: { type: "v2", value: new THREE.Vector2() }
+            };
+
+            const material = new THREE.ShaderMaterial({
+                uniforms: uniforms,
+                vertexShader: `
+                    uniform float u_time;
+                    varying vec2 vUv;
+                    
+                    // Perlin 2D noise function
+                    vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+                    vec2 mod289(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+                    vec3 permute(vec3 x) { return mod289(((x*34.0)+1.0)*x); }
+                    float snoise(vec2 v) {
+                        const vec4 C = vec4(0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439);
+                        vec2 i  = floor(v + dot(v, C.yy) );
+                        vec2 x0 = v -   i + dot(i, C.xx);
+                        vec2 i1;
+                        i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+                        vec4 x12 = x0.xyxy + C.xxzz;
+                        x12.xy -= i1;
+                        i = mod289(i);
+                        vec3 p = permute( permute( i.y + vec3(0.0, i1.y, 1.0 )) + i.x + vec3(0.0, i1.x, 1.0 ));
+                        vec3 m = max(0.5 - vec3(dot(x0,x0), dot(x12.xy,x12.xy), dot(x12.zw,x12.zw)), 0.0);
+                        m = m*m;
+                        m = m*m;
+                        vec3 x = 2.0 * fract(p * C.www) - 1.0;
+                        vec3 h = abs(x) - 0.5;
+                        vec3 ox = floor(x + 0.5);
+                        vec3 a0 = x - ox;
+                        m *= 1.79284291400159 - 0.85373472095314 * ( a0*a0 + h*h );
+                        vec3 g;
+                        g.x  = a0.x  * x0.x  + h.x  * x0.y;
+                        g.yz = a0.yz * x12.xz + h.yz * x12.yw;
+                        return 130.0 * dot(m, g);
+                    }
+
+                    void main() {
+                        vUv = uv;
+                        float noise = snoise(vUv * 4.0 + u_time * 0.1) * 0.1;
+                        vec3 pos = position;
+                        pos.z += noise;
+                        gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+                    }
+                `,
+                fragmentShader: `
+                    uniform float u_time;
+                    varying vec2 vUv;
+
+                    void main() {
+                        float intensity = 0.0;
+                        intensity += abs(sin(vUv.x * 20.0 + u_time * 0.5) * 0.02);
+                        intensity += abs(cos(vUv.y * 30.0 + u_time * 0.3) * 0.02);
+                        gl_FragColor = vec4(vec3(0.64, 0.69, 0.98), intensity); // indigo-300
+                    }
+                `,
+                wireframe: true,
+                transparent: true
+            });
+
+            mesh = new THREE.Mesh(geometry, material);
+            scene.add(mesh);
+            mesh.rotation.x = -Math.PI / 3.0;
+
+            // Handle window resize
+            window.addEventListener('resize', onWindowResize, false);
+            onWindowResize();
+        }
+
+        function onWindowResize() {
+            const heroSection = document.querySelector('.hero-section');
+            camera.aspect = heroSection.offsetWidth / heroSection.offsetHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(heroSection.offsetWidth, heroSection.offsetHeight);
+            uniforms.u_resolution.value.x = renderer.domElement.width;
+            uniforms.u_resolution.value.y = renderer.domElement.height;
+        }
+
+        function animateWave() {
+            requestAnimationFrame(animateWave);
+            uniforms.u_time.value += 0.01;
+            renderer.render(scene, camera);
+        }
+
+        initWave();
+        animateWave();
+
+
+        // --- Scroll-triggered Animation Script ---
+        const animatedElements = document.querySelectorAll('.fade-in-up');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                }
+            });
+        }, { threshold: 0.1 });
+        animatedElements.forEach(el => observer.observe(el));
+
+        // --- Publication Modal Script ---
+        const publications = {
+            ppg: [
+                { title: 'A Generative Methodology for PPG to ECG Reconstruction Based on Dual-Critic Approach', venue: 'Computing in Cardiology (CINC), Karlsruhe, 2024', link: 'https://cinc.org/archives/2024/pdf/CinC2024-486.pdf' },
+                { title: 'PP-Net: A Deep Learning Framework for PPG based Blood Pressure and Heart Rate Estimation', venue: 'IEEE Sensors Journal, 2020', link: 'https://ieeexplore.ieee.org/document/9082808' },
+                { title: 'DeepNet based Biometric Identification using Wrist-Worn PPG in Ambulatory Environment', venue: 'IEEE International Symposium on Circuits and Systems (ISCAS), 2018', link: 'https://ieeexplore.ieee.org/document/8350983' },
+
+                { title: 'CorNET: Deep Learning framework for PPG based Heart Rate Estimation and Biometric Identification in Ambulant Environment', venue: 'IEEE Transactions on Biomedical Circuits and Systems, 2019.', link: 'https://ieeexplore.ieee.org/document/8607019' },
+            ],
+            ecg: [
+
+                {
+                    title: 'Frank vectorcardiographic system from standard 12 lead ECG: An effort...', venue: 'Journal of Electrocardiology, 2016. ', link: 'https://www.sciencedirect.com/science/article/pii/S002207361500429X?via%3Dihub', target: "_blank",
+                    rel: "noopener noreferrer"
+                },
+                {
+                    title: 'A Low Complexity On-Chip ECG Data Compression Methodology Targeting Remote Health-Care Applications', venue: '36th Annual International Conference of the IEEE Engineering in Medicine and Biology Society (IEEE EMBS), Chicago, USA, 2014. ', link: 'https://ieeexplore.ieee.org/document/6944982', target: "_blank",
+                    rel: "noopener noreferrer"
+                },
+
+                { title: 'Accurate and Reliable 3-lead to 12-lead ECG Reconstruction Methodology..', venue: 'IRBM - Innovation and Research in Biomedical Engineering, Elsevier, 2014.', link: 'https://ieeexplore.ieee.org/document/6720673' },
+                { title: 'A Low-Complexity ECG Feature Extraction Algorithm for Mobile Healthcare...', venue: 'IEEE Journal of Biomedical and Health Informatics, 2013', link: 'https://pubmed.ncbi.nlm.nih.gov/23362250/' },
+
+            ],
+            cardiovascular: [
+                { title: 'Personalized subcutaneous implantable cardioverter-defibrillator sensing vectors generated by...', venue: 'Europace, 2022', link: 'https://academic.oup.com/europace/article/24/8/1267/6503710' },
+                { title: 'Low Power Personalized ECG Based System Design Methodology for Remote Cardiac Health Monitoring', venue: 'IEEE Access Journal, 2016.', link: 'https://ieeexplore.ieee.org/document/7762117' },
+
+
+
+            ],
+            sleep: [
+                { title: 'A Novel Deep-Learning Method for Obstructive Sleep Apnea Detection from Single Channel Photoplethysmography', venue: 'IEEE Circuits and Systems Society (ISCAS), London, UK, 2025.', link: 'https://ieeexplore.ieee.org/document/11043726' },
+
+                { title: 'A Data Driven Empirical Iterative Algorithm for GSR Signal Pre-Processing', venue: '26th European Signal Processing Conference - EUSIPCO 2018', link: 'https://www.researchgate.net/publication/328737324_A_Data_Driven_Empirical_Iterative_Algorithm_for_GSR_Signal_Pre-Processing' },
+
+
+            ]
+        };
+
+
+
+        const categoryCards = document.querySelectorAll('.category-card');
+        const modal = document.getElementById('publication-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalBody = document.getElementById('modal-body');
+        const modalClose = document.getElementById('modal-close');
+
+        categoryCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const category = card.dataset.category;
+                const categoryData = publications[category];
+
+                modalTitle.textContent = card.querySelector('h3').textContent;
+                modalBody.innerHTML = '';
+
+                if (categoryData && categoryData.length > 0) {
+                    categoryData.forEach(pub => {
+                        const pubElement = document.createElement('div');
+                        pubElement.className = 'p-4 border border-slate-700 rounded-lg flex justify-between items-center';
+                        pubElement.innerHTML = `
+                            <div>
+                                <p class="font-semibold text-white">${pub.title}</p>
+                                <p class="text-sm text-slate-400">${pub.venue}</p>
+                            </div>
+                            <a href="${pub.link}" class="accent-bg text-white px-3 py-1 rounded-md text-sm font-semibold accent-bg-hover transition-all shrink-0 ml-4">Read</a>
+                        `;
+                        modalBody.appendChild(pubElement);
+                    });
+                } else {
+                    modalBody.innerHTML = '<p class="text-slate-400">No publications in this category yet.</p>';
+                }
+
+                modal.classList.add('active');
+            });
+        });
+
+        function closeModal() {
+            modal.classList.remove('active');
+        }
+
+        modalClose.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+    </script>
+
+</body>
+
+</html>
