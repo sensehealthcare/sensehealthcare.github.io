@@ -20,7 +20,7 @@
 
         .hero-section {
             position: relative;
-            background-color: #0f172a;
+            background-color: #193125;
             min-height: 20vh;
             display: flex;
             align-items: center;
@@ -51,23 +51,24 @@
         }
 
         .accent-text {
-            background: -webkit-linear-gradient(45deg, #a5b4fc, #d208fb);
+            background: -webkit-linear-gradient(45deg, #afdb9c, #30d84a);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
 
         }
 
         .accent-bg {
-            background-color: #ab0cca;
+            background: linear-gradient(135deg, #045e04, #009933, #00cc4e);
+
         }
 
         .accent-bg-hover:hover {
-            background-color: #ab0cca;
+            background-color: #18e23a;
             /* indigo-700 */
         }
 
         .card {
-            background-color: #1e293b;
+            background-color: #193125;
             /* slate-800 */
             border: 1px solid #334155;
             /* slate-700 */
@@ -82,7 +83,7 @@
         .value-card {
             background-color: #000000;
             /* slate-800 */
-            border: 1px solid #334155;
+            border: 1px solid #193125;
             /* slate-700 */
             padding: 1.5rem;
             border-radius: 0.75rem;
@@ -91,11 +92,11 @@
 
         .value-card:hover {
             transform: translateY(-5px);
-            border-color: #ab0cca;
+            border-color: #18e23a;
         }
 
         .feature-card-usp {
-            background-color: #1e293b;
+            background-color: #193125;
             border-radius: 0.75rem;
             padding: 2rem;
             border: 1px solid #334155;
@@ -122,7 +123,7 @@
 
         /* New Publication Category Card Style */
         .category-card {
-            background-color: #1e293b;
+            background-color: #193125;
             border: 1px solid #000000;
             border-radius: 0.75rem;
             padding: 2rem;
@@ -133,7 +134,7 @@
 
         .category-card:hover {
             transform: translateY(-8px);
-            border-color: #ab0cca;
+            border-color: #18e23a;
             box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.2);
         }
 
@@ -176,7 +177,7 @@
         .modal-content {
             background-color: #000000;
             border-radius: 0.75rem;
-            border: 1px solid #9B5DE5;
+            border: 1px solid #18e23a;
             padding: 2rem;
             width: 90%;
             max-width: 800px;
@@ -309,6 +310,65 @@
         .senseonpro {
             font-family: 'HK Modular';
         }
+
+        /* Drop this CSS into your stylesheet */
+        .research-stats {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            /* space between items */
+            background: #111;
+            /* dark card background */
+            padding: 1.5rem 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            color: white;
+            font-family: "Segoe UI", sans-serif;
+            max-width: 700px;
+            margin: auto;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .value {
+            display: block;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #4ade80;
+            /* green accent */
+        }
+
+        .label {
+            font-size: 1rem;
+            color: #cbd5e1;
+        }
+
+        .divider {
+            width: 1px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+
+        /* Extra small screens: wrap and hide dividers to stay compact */
+        @media (max-width: 420px) {
+            .research-stats {
+                flex-wrap: wrap;
+                row-gap: .35rem;
+            }
+
+            .research-stats .divider {
+                display: none;
+            }
+        }
+
+        /* Optional: place under a logo neatly */
+        .logo+.research-stats {
+            margin-top: .35rem;
+        }
     </style>
 </head>
 
@@ -346,19 +406,21 @@
             <canvas id="wave-canvas" class="absolute inset-0 w-full h-full"></canvas>
 
             <!-- Content wrapper -->
-            <div class="relative z-2 w-full px-3 text-center hero-content" style="height: 100vh;"> <!-- Logo on top -->
-                <a href="" class="flex items-center justify-center mt-5">
-    <img src="SENSEON PRO (3).png" alt="Sense Health" class="h-40 w-auto">
-</a>
+            <div class="relative z-2 w-full px-3 text-center hero-content" style="min-height: 100vh;">
+                <!-- Logo on top -->
+                <a href="" class="flex items-center justify-center mt-5 mb-16" >
+                    <img src="1.png" alt="Sense Health" class="h-20 w-auto">
+                </a>
+
 
 
                 <!-- Headline -->
-                <h1 class="text-4xl md:text-6xl font-bold text-white leading-tight mb-4">
+                <h1 class="text-4xl md:text-6xl font-bold text-white leading-tight m-24" style=" font-weight: lighter;">
                     The Future of Health, <span class="accent-text">at Your Fingertip.</span>
                 </h1>
 
                 <!-- Subtext -->
-                <p class="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto mb-8">
+                <p class="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto mb-6">
                     Our AI-enabled <span class="text-white font-semibold">affordable</span> wearable delivers <span
                         class="text-white font-semibold">prickless blood
                         glucose</span>, <span class="text-white font-semibold">cuffless blood pressure</span>, and a
@@ -368,7 +430,7 @@
                 <!-- Button -->
                 <div class="flex justify-center">
                     <a href="#product"
-                        class="accent-bg text-white px-8 py-3 rounded-lg text-lg font-semibold accent-bg-hover transition-transform transform hover:scale-105 shadow-lg">
+                        class="accent-bg text-white px-8 py-3 rounded-lg text-lg font-semibold accent-bg-hover transition-transform transform hover:scale-105 shadow-lg mb-20">
                         Discover the Technology
                     </a>
                 </div>
@@ -377,10 +439,11 @@
 
 
         <!-- Product Features Section -->
-        <section id="product" class="py-20 section-wrapper">
+        <section id="product" class="py-20 section-wrapper scroll-mt-24">
             <div class="container mx-auto px-6">
-                <div class="text-center mb-16 fade-in-up">
-                    <h2 class="text-3xl md:text-4xl font-bold text-white">One Touch. A Lifetime of Insight.</h2>
+                <div class="text-center mb-10 fade-in-up">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white" style="font-weight: lighter;">One Touch. A
+                        Lifetime of Insight.</h2>
                     <p class="text-lg text-slate-400 mt-4 max-w-2xl mx-auto">Our device provides a complete picture of
                         your health from a single, non-invasive touch, connected to our intelligent mobile app.</p>
                 </div>
@@ -392,9 +455,33 @@
                             accuracy.</p>
                     </div>
                     <div class="space-y-4">
-                       <a href="" class="flex justify-start mt-1">
-    <img src="SENSEON PRO (5).png" alt="SenseOn Logo" class="h-20 w-auto">
-</a>
+                        <a href="" class="flex justify-start mt-1 align-items-left">
+                            <img src="1.png" alt="SenseOn Logo" class="h-30 w-auto">
+                        </a>
+                        <!-- Place this where you want the stats to appear -->
+                        <div class="research-stats" aria-label="Publication metrics">
+                            <div class="stat">
+                                <span class="value">12</span>
+                                <span class="label">Patents</span>
+                            </div>
+
+                            <div class="divider"></div>
+
+                            <div class="stat">
+                                <span class="value">26</span>
+                                <span class="label">Journals</span>
+                            </div>
+
+                            <div class="divider"></div>
+                            <div class="stat">
+                                <span class="value">50+</span>
+                                <span class="label">International conferences</span>
+                            </div>
+
+                            
+                        </div>
+
+
 
                         <div class="flex items-start fade-in-up" style="transition-delay: 200ms;">
                             <div class="accent-bg p-3 rounded-full mr-5 shrink-0"><svg
@@ -448,17 +535,17 @@
                                     SpO2.</p>
                             </div>
                         </div>
-                       
-                        
-                        
+
+
+
                     </div>
                 </div>
             </div>
         </section>
-        <section id="demo" class="py-20 bg-slate-900" style="background-color: #000000;">
+        <section id="demo" class="py-20 bg-slate-900 scroll-mt-24" style="background-color: #000000;">
             <div class="container mx-auto px-6 text-center">
                 <!-- Section Title -->
-                <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-6" style="font-weight: lighter;">
                     See How Our Device Works
                 </h2>
                 <p class="text-lg text-slate-400 mb-12 max-w-2xl mx-auto">
@@ -529,10 +616,11 @@
 
 
         <!-- Core Technology USP Section -->
-        <section id="core-technology" class="py-20 bg-slate-900 section-wrapper" style="background-color: #000000;">
+        <section id="core-technology" class="py-20 bg-slate-900 section-wrapper scroll-mt-24" style="background-color: #000000;">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-16 fade-in-up">
-                    <h2 class="text-3xl md:text-4xl font-bold text-white">Revolutionizing Health Monitoring</h2>
+                    <h2 class="text-3xl md:text-4xl font-bold text-white" style="font-weight: lighter;">Revolutionizing
+                        Health Monitoring</h2>
                     <p class="text-lg text-slate-400 mt-4 max-w-3xl mx-auto">
                         Our core innovations replace inconvenient, traditional methods with seamless, intelligent
                         technology.
@@ -580,10 +668,11 @@
             </div>
         </section>
         <!-- Publications Section -->
-        <section id="publications" class="py-20 bg-slate-900 section-wrapper" style="background-color: #000000;">
+        <section id="publications" class="py-20 bg-slate-900 section-wrapper scroll-mt-24" style="background-color: #000000;">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-16 fade-in-up">
-                    <h2 class="text-3xl md:text-4xl font-bold text-white">Our Foundation Research</h2>
+                    <h2 class="text-3xl md:text-4xl font-bold text-white" style="font-weight: lighter;">Our Foundation
+                        Research</h2>
                     <p class="text-lg text-slate-400 mt-4 max-w-2xl mx-auto">Our technology is built upon a deep
                         foundation of peer-reviewed scientific research. Select a domain to explore our publications.
                     </p>
@@ -658,7 +747,7 @@
                 </div>
             </div>
         </section>
-        
+
 
 
         <!-- Ethos Section -->
@@ -666,8 +755,9 @@
             <div class="container mx-auto px-6">
                 <div class="grid lg:grid-cols-2 gap-16 items-center">
                     <div class="fade-in-up">
-                        <p class="text-indigo-400 font-semibold tracking-wider uppercase">Our Ethos</p>
-                        <h2 class="text-3xl md:text-4xl font-bold text-white mt-2">Driven by Science, Guided by Values.
+                        <p class="text-green-400 font-semibold tracking-wider uppercase">Our Ethos</p>
+                        <h2 class="text-3xl md:text-4xl font-bold text-white mt-2" style="font-weight: lighter;">Driven
+                            by Science, Guided by Values.
                         </h2>
                         <p class="text-lg text-slate-400 mt-4">Sense Health began as a research initiative within one of
                             India's premier institutions, the IIT Hyderabad. Our technology is built on a foundation of
@@ -676,7 +766,7 @@
                     </div>
                     <div class="grid sm:grid-cols-2 gap-6 fade-in-up" style="transition-delay: 200ms;">
                         <!-- Value 1: Innovation -->
-                        <div class="value-card" style="background-color: #1e293b;">
+                        <div class="value-card" style="background-color: #193125;">
                             <div class="accent-bg w-12 h-12 rounded-lg flex items-center justify-center mb-4">
                                 <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -689,7 +779,7 @@
                             <p class="text-slate-400">Pushing the boundaries of health technology.</p>
                         </div>
                         <!-- Value 2: Patient-Centricity -->
-                        <div class="value-card" style="background-color: #1e293b;">
+                        <div class="value-card" style="background-color: #193125;">
                             <div class="accent-bg w-12 h-12 rounded-lg flex items-center justify-center mb-4">
                                 <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -702,7 +792,7 @@
                             <p class="text-slate-400">Designing for comfort and real-world needs.</p>
                         </div>
                         <!-- Value 3: Scientific Rigor -->
-                        <div class="value-card" style="background-color: #1e293b;">
+                        <div class="value-card" style="background-color: #193125;">
                             <div class="accent-bg w-12 h-12 rounded-lg flex items-center justify-center mb-4">
                                 <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -715,7 +805,7 @@
                             <p class="text-slate-400">Ensuring our technology is backed by evidence.</p>
                         </div>
                         <!-- Value 4: Integrity -->
-                        <div class="value-card" style="background-color: #1e293b;">
+                        <div class="value-card" style="background-color: #193125;">
                             <div class="accent-bg w-12 h-12 rounded-lg flex items-center justify-center mb-4">
                                 <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -734,24 +824,28 @@
             </div>
         </section>
 
-        <section id="team" class="py-20 section-wrapper" style="align-items: center;">
+        <section id="team" class="py-20 section-wrapper scroll-mt-24" style="align-items: center;">
             <div class="container mx-auto px-6" style="align-items: center;">
                 <div class="text-center mb-16 fade-in-up">
-                    <h2 class="text-3xl md:text-4xl font-bold text-white">Leadership Team</h2>
-                    <p class="text-lg text-slate-400 mt-4 max-w-2xl mx-auto">Meet the visionaries driving our mission forward. Our CEO and CSO bring strategic leadership, innovation, and deep expertise to guide the company’s journey</p>
+                    <h2 class="text-3xl md:text-4xl font-bold text-white" style="font-weight: lighter;">Leadership Team
+                    </h2>
+                    <p class="text-lg text-slate-400 mt-4 max-w-2xl mx-auto">Meet the visionaries driving our mission
+                        forward. Our CEO and CSO bring strategic leadership, innovation, and deep expertise to guide the
+                        company’s journey</p>
                 </div>
                 <div class="grid sm:grid-cols-2 lg:grid-cols-2 gap-x-8 gap-y-12 max-w-5xl mx-auto">
                     <div class="text-center fade-in-up" style="transition-delay: 200ms;"><img src="amit.jpg"
-                            alt="Team Member 1" class="w-40 h-50 rounded-full mx-auto mb-4 border-4 border-slate-700">
+                            alt="Team Member 1" class="w-40 h-50 rounded-full mx-auto mb-4 border-0 border-slate-700">
                         <h3 class="text-xl font-bold text-white">PROF AMIT ACHARYYA</h3>
                         <p class="text-slate-400">Founder & CEO</p>
                     </div>
-                    <div class="text-center fade-in-up" style="transition-delay: 200ms; align-items: center;"><img src="Asudev.jpg"
-                            alt="Team Member 2" class="w-40 h-50 rounded-full mx-auto mb-4 border-4 border-slate-700">
+                    <div class="text-center fade-in-up" style="transition-delay: 200ms; align-items: center;"><img
+                            src="Asudev.jpg" alt="Team Member 2"
+                            class="w-40 h-50 rounded-full mx-auto mb-4 border-0 border-slate-700">
                         <h3 class="text-xl font-bold text-white">PROF ASUDEB DUTTA</h3>
                         <p class="text-slate-400">CSO</p>
                     </div>
-                    
+
                 </div>
             </div>
         </section>
@@ -759,7 +853,8 @@
         <!-- CTA Section -->
         <section id="contact" class="py-20 bg-slate-900" style="background-color: #000000;">
             <div class="container mx-auto px-6 text-center fade-in-up">
-                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Join the Health Revolution</h2>
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4" style="font-weight: lighter;">Join the Health
+                    Revolution</h2>
                 <p class="text-lg text-slate-300 max-w-2xl mx-auto mb-8">Stay updated on our launch, or reach out for
                     partnership and investment opportunities. Let's build the future of healthcare together.</p>
                 <a href="https://mail.google.com/mail/?view=cm&fs=1&to=connectus@sensehealth.care" target="_blank"
@@ -780,16 +875,16 @@
                     <a href="" class="flex items-center">
                         <img src="whitewash logo.png" alt="Sense Health" class="h-20 w-auto">
                     </a>
-                    
+                    <p class="text-slate-400 max-w-xs">The Future of Health, at Your Fingertip.</p>
                     <li><a href="https://mail.google.com/mail/?view=cm&fs=1&to=connectus@sensehealth.care"
-                                target="_blank" rel="noopener noreferrer"
-                                class="hover:text-white transition-colors">connectus@sensehealth.care</a></li>
-                                                        <li><a href="https://mail.google.com/mail/?view=cm&fs=1&to=ceo@sensehealth.care"
-                                target="_blank" rel="noopener noreferrer"
-                                class="hover:text-white transition-colors">ceo@sensehealth.care</a></li>
+                            target="_blank" rel="noopener noreferrer"
+                            class="hover:text-white transition-colors">connectus@sensehealth.care</a></li>
+                    <li><a href="https://mail.google.com/mail/?view=cm&fs=1&to=ceo@sensehealth.care" target="_blank"
+                            rel="noopener noreferrer"
+                            class="hover:text-white transition-colors">ceo@sensehealth.care</a></li>
                 </div>
                 <!-- Contact Info -->
-               
+
                 <!-- Social Media -->
                 <div>
                     <h4 class="font-semibold text-white tracking-wider uppercase mb-4">Follow Us</h4>
@@ -826,12 +921,12 @@
                .597 23.403 0 22.675 0z" />
                             </svg>
                         </a>
-                        
+
 
 
                     </div>
                 </div>
-                
+
 
             </div>
         </div>
@@ -957,7 +1052,7 @@
                         float intensity = 0.03;
                         intensity += abs(sin(vUv.x * 20.0 + u_time * 0.5) * 0.02);
                         intensity += abs(cos(vUv.y * 30.0 + u_time * 0.3) * 0.02);
-                        gl_FragColor = vec4(vec3(1.0, 1.0, 1.0)* 1.8, intensity); // indigo-300
+                        gl_FragColor = vec4(vec3(0.2, 0.6, 0.3)* 1.8, intensity); // indigo-300
                     }
                 `,
 
@@ -1024,6 +1119,8 @@
                     title: 'A Low Complexity On-Chip ECG Data Compression Methodology Targeting Remote Health-Care Applications', venue: '36th Annual International Conference of the IEEE Engineering in Medicine and Biology Society (IEEE EMBS), Chicago, USA, 2014. ', link: 'https://ieeexplore.ieee.org/document/6944982', target: "_blank",
                     rel: "noopener noreferrer"
                 },
+                { title: 'Development of an automated updated Selvester QRS scoring system using SWT-based QRS fractionation detection and classification', venue: 'IEEE Journal of Biomedical and Health Informatics, 2014.', link: 'https://ieeexplore.ieee.org/document/6516583' },
+
 
                 { title: 'Accurate and Reliable 3-lead to 12-lead ECG Reconstruction Methodology..', venue: 'IRBM - Innovation and Research in Biomedical Engineering, Elsevier, 2014.', link: 'https://ieeexplore.ieee.org/document/6720673' },
                 { title: 'A Low-Complexity ECG Feature Extraction Algorithm for Mobile Healthcare...', venue: 'IEEE Journal of Biomedical and Health Informatics, 2013', link: 'https://pubmed.ncbi.nlm.nih.gov/23362250/' },
@@ -1040,6 +1137,7 @@
             sleep: [
                 { title: 'A Novel Deep-Learning Method for Obstructive Sleep Apnea Detection from Single Channel Photoplethysmography', venue: 'IEEE Circuits and Systems Society (ISCAS), London, UK, 2025.', link: 'https://ieeexplore.ieee.org/document/11043726' },
 
+                { title: 'A Data Driven Empirical Iterative Algorithm for GSR Signal Pre-Processing', venue: '26th European Signal Processing Conference - EUSIPCO 2018', link: 'https://ieeexplore.ieee.org/document/8553191' },
                 { title: 'A Data Driven Empirical Iterative Algorithm for GSR Signal Pre-Processing', venue: '26th European Signal Processing Conference - EUSIPCO 2018', link: 'https://ieeexplore.ieee.org/document/8553191' },
 
 
